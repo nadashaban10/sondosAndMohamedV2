@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { useLanguage } from '../context/LanguageProvider'
+import { INVITATION } from '../invitationData'
 
 export default function ShareButton() {
   const { copy, isArabic } = useLanguage()
@@ -18,14 +19,19 @@ export default function ShareButton() {
       text: copy.shareText,
       url: window.location.href,
     }
+
     try {
       if (navigator.share) {
+        const withImage = await tryShareWithImage(data)
+        if (withImage) return
         await navigator.share(data)
         return
       }
       await navigator.clipboard.writeText(window.location.href)
       setToast(copy.shareCopied)
-    } catch (e) {}
+    } catch (e) {
+      if (e?.name === 'AbortError') return
+    }
   }
 
   return (
@@ -43,6 +49,24 @@ export default function ShareButton() {
       )}
     </>
   )
+}
+
+async function tryShareWithImage(base) {
+  try {
+    const imageUrl = new URL(INVITATION.coupleImage, window.location.origin).href
+    const response = await fetch(imageUrl)
+    if (!response.ok) return false
+
+    const blob = await response.blob()
+    const file = new File([blob], 'mohamed-sondos.jpg', { type: blob.type || 'image/jpeg' })
+    const data = { ...base, files: [file] }
+
+    if (!navigator.canShare?.(data)) return false
+    await navigator.share(data)
+    return true
+  } catch {
+    return false
+  }
 }
 
 function EnvelopeIcon() {

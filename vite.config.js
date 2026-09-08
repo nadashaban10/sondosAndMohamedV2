@@ -14,7 +14,7 @@ function invitationMetaPlugin() {
     name: 'invitation-meta',
     transformIndexHtml(html) {
       const origin = siteOrigin()
-      const imagePath = '/images/couple.png'
+      const imagePath = '/images/couple.jpg'
       const ogImage = origin ? `${origin}${imagePath}` : imagePath
       const ogUrl = origin ? `${origin}/` : '/'
       return html.replaceAll('__OG_IMAGE__', ogImage).replaceAll('__OG_URL__', ogUrl)
