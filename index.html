@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      (function () {
+        try {
+          var chosen = localStorage.getItem('invite-lang-chosen') === '1'
+          var stored = localStorage.getItem('invite-lang')
+          var lang
+          if (chosen && (stored === 'ar' || stored === 'en')) {
+            lang = stored
+          } else {
+            var list = (navigator.languages && navigator.languages.length
+              ? navigator.languages
+              : [navigator.language, navigator.userLanguage]
+            ).filter(Boolean)
+            lang = list.some(function (code) {
+              code = String(code).toLowerCase().replace('_', '-')
+              return code === 'ar' || code.indexOf('ar-') === 0
+            })
+              ? 'ar'
+              : 'en'
+          }
+          document.documentElement.lang = lang
+          document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr'
+        } catch (e) {}
+      })()
+    </script>
+    <meta
+      name="description"
+      content="Join Mohamed & Sondos for their Katb Kitab at Al-Ali Al-Azeem Mosque, Almazah, on 20 September 2026 at 9:30 PM."
+    />
+    <meta name="theme-color" content="#faf6ee" />
+    <title>Mohamed & Sondos — Katb Kitab</title>
+
+    <link rel="canonical" href="__OG_URL__" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Mohamed & Sondos" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale:alternate" content="ar_EG" />
+    <meta property="og:url" content="__OG_URL__" />
+    <meta property="og:title" content="Mohamed & Sondos — Katb Kitab Invitation" />
+    <meta
+      property="og:description"
+      content="Join Mohamed & Sondos for their Katb Kitab at Al-Ali Al-Azeem Mosque, Almazah, on 20 September 2026 at 9:30 PM."
+    />
+    <meta property="og:image" content="__OG_IMAGE__" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:alt" content="Mohamed and Sondos as children, embracing and smiling" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Mohamed & Sondos — Katb Kitab Invitation" />
+    <meta
+      name="twitter:description"
+      content="Join Mohamed & Sondos for their Katb Kitab at Al-Ali Al-Azeem Mosque, Almazah, on 20 September 2026 at 9:30 PM."
+    />
+    <meta name="twitter:image" content="__OG_IMAGE__" />
+    <meta name="twitter:image:alt" content="Mohamed and Sondos as children, embracing and smiling" />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Aref+Ruqaa:wght@400;700&family=Cinzel:wght@400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Pinyon+Script&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
